@@ -1,42 +1,58 @@
 import 'package:flutter/material.dart';
 
-class CurrencyConverterMaterialPage extends StatelessWidget {
+class CurrencyConverterMaterialPage extends StatefulWidget {
   const CurrencyConverterMaterialPage({super.key});
 
   @override
+  State<CurrencyConverterMaterialPage> createState() =>
+      _CurrencyConverterMaterialPage();
+}
+
+class _CurrencyConverterMaterialPage
+    extends State<CurrencyConverterMaterialPage> {
+  double result = 0;
+  final TextEditingController textEditingController = TextEditingController();
+
+  void convert() {
+    setState(() {
+      result = double.parse(textEditingController.text) * 950;
+    });
+  }
+
+  @override
+  // Widget build(BuildContext context) {
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(255, 111, 232, 1),
+        backgroundColor: const Color.fromRGBO(150, 111, 232, 1),
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(150, 111, 232, 1),
+          title: const Text("Currency Converter"),
+          elevation: 0,
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Text(
-              //   "hello there",
-              //   style: TextStyle(
-              //     color: Color.fromRGBO(123, 23, 12, 1),
-              //     fontSize: 50,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
-              const Text(
-                "0",
-                style: TextStyle(
+              Text(
+                "Naira ${result.toStringAsFixed(2)}",
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  style: TextStyle(
+                  controller: textEditingController,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 26,
                   ),
                   decoration: InputDecoration(
                     hintText: "Convert your money",
-                    hintStyle: TextStyle(fontSize: 23, color: Colors.white),
+                    hintStyle:
+                        const TextStyle(fontSize: 23, color: Colors.white),
                     prefixIcon: Icon(Icons.monetization_on),
                     prefixIconColor: Colors.white,
                     filled: true,
@@ -54,11 +70,28 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
                   ),
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  debugPrint("button clicked by me boss");
-                },
-                child: const Text("Click Me"),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(
+                  onPressed: convert,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 15,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    "Convert",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
               )
             ],
           ),
